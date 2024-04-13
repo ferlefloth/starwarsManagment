@@ -1,28 +1,36 @@
-import { Body, Controller, Get, Post, Req } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Post, Req, UseGuards } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { UserRegisterDto } from "./dto/user-register-request.dto";
 import { UserResponseDto } from "./dto/user-register-response.dto";
+import { AuthGuard } from "src/auth/auth.guard";
+
 
 @Controller("user")
 export class UserController{
-    constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
-@Post('register')
-  async register(
-    @Req() request: Request,
-    @Body() userRegister: UserRegisterDto,
-  ): Promise<UserResponseDto> {
-    //const userId = request['user'].uid;
-    //const email = request['user'].email;
-
-    return await this.userService.register(
-      "", //userId
-      UserRegisterDto.copy(userRegister),
-    );
+  @UseGuards(AuthGuard)
+  @Get()
+  async getMovies(){
+    return this.userService.getMovies();
   }
 
+  @UseGuards(AuthGuard)
   @Get()
-  async test(){
-    return "Hello Fer desde userController"
+  async getDetails(){
+    return this.userService.getDetailsOfMovies(); // solo los usuarios con Rol "Usuarios Regulares"
+  }
+
+  @UseGuards(AuthGuard)
+  @Post()
+  async createMovie(){
+
+    return this.userService.createMovie();//  solo los usuarios con el Rol "Administrador"
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch()
+  async updateMovie(){ 
+    return this.userService.updateMovie();//  solo los usuarios con el Rol "Administrador"
   }
 }

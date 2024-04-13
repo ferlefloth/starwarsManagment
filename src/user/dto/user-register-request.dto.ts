@@ -16,6 +16,9 @@ export class UserRegisterDto{
 
     @IsString()
     password: string;
+
+    @IsString()
+    role: string; //hacer único
   
 
     setEmail(email: string): UserRegisterDto {
@@ -27,7 +30,8 @@ export class UserRegisterDto{
         registerDto.userName = dto.userName;
         registerDto.email = dto.email;
         registerDto.name = dto.name;
-        registerDto.password = dto.password
+        registerDto.password = dto.password;
+        registerDto.role = dto.role;
         return registerDto;
       }
 }

@@ -17,6 +17,9 @@ export class User{
 
     @Prop()
     userName: string;
+
+    @Prop()
+    role: string; // ver de hacerlo úno u otro
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

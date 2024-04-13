@@ -8,8 +8,18 @@ import {User, UserDocument} from './schema/user.schema';
 export class UserService{
     constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 
-    async register (userId: string , userCreateRequest: UserRegisterDto){
-        
-        return this.userModel.create(userCreateRequest)
+
+    async getMovies(){
+
     }
+
+    async getDetailsOfMovies(){
+
+    }
+
+    async createMovie(){
+
+    }
+
+    async updateMovie(){}
 }
