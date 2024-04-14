@@ -10,16 +10,22 @@ export class UserService{
 
 
     async getMovies(){
-
+        return "Cualquiera puede verme!"
     }
 
     async getDetailsOfMovies(){
-
+        return "Solo los Usuarios regulares"
     }
 
     async createMovie(){
-
+        return "Solo los Admin"
     }
 
-    async updateMovie(){}
+    async updateMovie(){
+        return "Solo los Admin"
+    }
+
+    async deleteMovie(){
+        return "Solo los Admin"
+    }
 }
