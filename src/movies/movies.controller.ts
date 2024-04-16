@@ -16,10 +16,10 @@ export class MoviesController{
       return this.moviesService.getMovies();
     }
   
-    @Get("all")
+    @Get(":id")
     @Roles(['Usuario Regular'])
-    async getDetails(){
-      return this.moviesService.getDetailsOfMovies(); // solo los usuarios con Rol "Usuarios Regulares"
+    async getDetails(@Param('id')  id: number){
+      return this.moviesService.getDetailsOfMovieById(id); // solo los usuarios con Rol "Usuarios Regulares"
     }
   
     @Roles(['Administrador'])

@@ -14,15 +14,20 @@ export class MoviesService{
     async getMovies(): Promise<any> {
         try{
              const response = await axios.get('https://swapi.dev/api/films')
-             console.log('el response: ' + JSON.stringify(response.data));
              return response.data
          }catch(error){
-             console.log('el error: ' + JSON.stringify(error))
+            throw new Error()
          }
      }
  
-     async getDetailsOfMovies(){
-         return "Solo los Usuarios regulares"
+     async getDetailsOfMovieById(id:number){
+        try{
+            const response = await axios.get(`https://swapi.dev/api/films/${id}`)
+            return response.data
+        }catch(error){
+            console.log(`[Error] - userService.getDetailsOfMovieById - ${JSON.stringify(error)}`)
+            throw new Error()
+        }
      }
  
      async createMovie(moviesRequest: MoviesRequestDto): Promise<MoviesResponseDto>{ //chequear validaciones
