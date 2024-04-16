@@ -27,19 +27,18 @@ export class MoviesController{
     async createMovie(
       @Body() moviesRequest: MoviesRequestDto
     ){
-      
-      return this.moviesService.createMovie(moviesRequest);//  solo los usuarios con el Rol "Administrador"
+      return this.moviesService.createMovie(moviesRequest);
     }
   
     @Patch(':id')
     @Roles(['Administrador'])
     async updateMovie(@Param('id')id :number, @Body() updateMovieDto: MoviesRequestDto){ 
-      return this.moviesService.updateMovie(id, updateMovieDto);//  solo los usuarios con el Rol "Administrador"
+      return this.moviesService.updateMovie(id, updateMovieDto);
     }
   
-    @Delete()
+    @Delete(':id')
     @Roles(['Administrador'])
-    async deleteMovie(){
-      return this.moviesService.deleteMovie()
+    async deleteMovie(@Param('id')  id: number){
+      return this.moviesService.deleteMovie(id)
     }
 }

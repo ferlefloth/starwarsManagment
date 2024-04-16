@@ -59,7 +59,21 @@ export class MoviesService{
         return MoviesResponseDto.fromEntity(updatedMovie);
      }
  
-     async deleteMovie(){
-         return "Solo los Admin"
+     async deleteMovie(id: number){ 
+        const findedMovieQuery  = this.moviesModel.findOne({episode_id: id})
+
+        if(!findedMovieQuery ){
+            throw Error('movie not found')
+        }
+        
+        const findedMovie = await findedMovieQuery.exec();
+
+        try{
+            const deletedMovie = await this.moviesModel.findByIdAndDelete(findedMovie._id);
+            console.log('deletedMovie: ' + JSON.stringify(deletedMovie))
+        }catch(error){
+            console.log('el error: ' + JSON.stringify(error))
+        }
+        return { statusCode: 204 } // hacerlo más elegante
      }
 }
