@@ -20,8 +20,8 @@ export class AuthService{
     }
 
     async login(userObjectLogin : LoginAuthDto){
-        const { email, password } =userObjectLogin //tomarlo del token
-        const findUser = await this.userModel.findOne({email: email})
+        const { email, password } =userObjectLogin //tomarlo del token //Hacshear pass y la buscas
+        const findUser = await this.userModel.findOne({email: email}) //Coincida email y que coincida el passwards
         console.log('el findUser:' + JSON.stringify(findUser))
     
         if(!findUser) throw new  HttpException('USER_NOT_FOUND',404);

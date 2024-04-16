@@ -9,7 +9,7 @@ import { LoginAuthDto } from "./dto/login-auth.dto";
 export class AuthController{
     constructor(private readonly authService: AuthService) {}
 
-    //register
+    //register // DENTRO DE USUARIO
     @Post('register')
     registerUser(@Body() userObject: RegisterAuthDto){
         

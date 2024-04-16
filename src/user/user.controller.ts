@@ -17,6 +17,7 @@ export class UserController{
     return this.userService.getMovies();
   }
 
+
   @Get("all")
   @Roles(['Usuario Regular'])
   async getDetails(){
@@ -42,3 +43,19 @@ export class UserController{
     return this.userService.deleteMovie()
   }
 }
+
+/*
+  // Mover el createUser/regiser del auth a la entidad USER
+  // Mover los controladores de las movies a la entidad Movies. sacarlas de la entidad User
+
+  
+  
+  // Ver bien el package. 
+
+
+
+
+  //Servicio para test
+  //Ver railway para deployar
+
+*/
