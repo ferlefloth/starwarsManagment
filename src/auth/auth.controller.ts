@@ -18,8 +18,6 @@ export class AuthController{
         return this.authService.register(userObject);
     }
 
-
-    //loigin
     @Post('login')
     loginUser(@Body() userObjectLogin: LoginAuthDto){
         return this.authService.login(userObjectLogin)

@@ -3,6 +3,8 @@ import { InjectModel } from "@nestjs/mongoose";
 import axios from "axios";
 import { Model } from "mongoose";
 import { Movies, MoviesDocument } from "./schema/movies.schema";
+import { MoviesResponseDto } from "./dto/movies-response-dto";
+import { MoviesRequestDto } from "./dto/movies-request-dto";
 
 @Injectable()
 export class MoviesService{
@@ -22,8 +24,13 @@ export class MoviesService{
          return "Solo los Usuarios regulares"
      }
  
-     async createMovie(){
-         return "Solo los Admin"
+     async createMovie(moviesRequest: MoviesRequestDto): Promise<MoviesResponseDto>{ //chequear validaciones
+        
+        const movieToSave = MoviesResponseDto.fromEntity(moviesRequest)
+        console.log('el moviesToSave: ' + JSON.stringify(movieToSave))
+
+        const savedMovied: Movies =  await this.moviesModel.create(movieToSave)
+        return MoviesResponseDto.fromEntity(savedMovied)
      }
  
      async updateMovie(){
