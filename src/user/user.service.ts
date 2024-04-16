@@ -2,37 +2,18 @@ import { Injectable } from "@nestjs/common";
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import {User, UserDocument} from './schema/user.schema';
-import axios, { AxiosResponse } from 'axios';
-
+import { RegisterAuthDto } from "src/auth/dto/register-auth.dto";
+import {hash} from 'bcrypt'
 
 @Injectable()
 export class UserService{
     constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 
+    async register(userObject:RegisterAuthDto){
+        const { password } = userObject;
+        const plainToHash = await hash(password,10);
 
-    async getMovies(): Promise<any> {
-       try{
-            const response = await axios.get('https://swapi.dev/api/films')
-            console.log('el response: ' + JSON.stringify(response.data));
-            return response.data
-        }catch(error){
-            console.log('el error: ' + JSON.stringify(error))
-        }
-    }
-
-    async getDetailsOfMovies(){
-        return "Solo los Usuarios regulares"
-    }
-
-    async createMovie(){
-        return "Solo los Admin"
-    }
-
-    async updateMovie(){
-        return "Solo los Admin"
-    }
-
-    async deleteMovie(){
-        return "Solo los Admin"
-    }
+        userObject = {...userObject, password:plainToHash}
+        return this.userModel.create(userObject);
+    }    
 }
