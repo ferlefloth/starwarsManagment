@@ -6,6 +6,7 @@ import { Movies, MoviesDocument } from "./schema/movies.schema";
 import { MoviesResponseDto } from "./dto/movies-response-dto";
 import { MoviesRequestDto } from "./dto/movies-request-dto";
 
+
 @Injectable()
 export class MoviesService{
     constructor(@InjectModel(Movies.name) private readonly moviesModel: Model<MoviesDocument>){}
@@ -33,8 +34,29 @@ export class MoviesService{
         return MoviesResponseDto.fromEntity(savedMovied)
      }
  
-     async updateMovie(){
-         return "Solo los Admin"
+     async updateMovie(
+        id: number,
+        moviesRequest: MoviesRequestDto
+     ){
+         
+        const findedMovieQuery  = this.moviesModel.findOne({episode_id: id})
+
+        if(!findedMovieQuery ){
+            throw Error('movie not found')
+        }
+
+        const findedMovie = await findedMovieQuery.exec();
+
+        for (const key in moviesRequest) {
+            if (Object.prototype.hasOwnProperty.call(moviesRequest, key)) {
+              findedMovie[key] = moviesRequest[key];
+            }
+          }
+    
+    
+        const updatedMovie = await findedMovie.save();
+
+        return MoviesResponseDto.fromEntity(updatedMovie);
      }
  
      async deleteMovie(){

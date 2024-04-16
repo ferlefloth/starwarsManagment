@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "src/auth/auth.guard";
 import { MoviesService } from "./movies.service";
 import { Roles } from "src/auth/config/roles.decorator";
@@ -31,10 +31,10 @@ export class MoviesController{
       return this.moviesService.createMovie(moviesRequest);//  solo los usuarios con el Rol "Administrador"
     }
   
-    @Patch()
+    @Patch(':id')
     @Roles(['Administrador'])
-    async updateMovie(){ 
-      return this.moviesService.updateMovie();//  solo los usuarios con el Rol "Administrador"
+    async updateMovie(@Param('id')id :number, @Body() updateMovieDto: MoviesRequestDto){ 
+      return this.moviesService.updateMovie(id, updateMovieDto);//  solo los usuarios con el Rol "Administrador"
     }
   
     @Delete()
