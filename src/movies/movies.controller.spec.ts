@@ -1,18 +1,13 @@
 import { Test } from '@nestjs/testing';
 import { MoviesController } from './movies.controller'
 import { MoviesService } from './movies.service';
-import { AuthModule } from 'src/auth/auth.module';
-import { AuthGuard } from 'src/auth/auth.guard';
-
-import { AuthService } from 'src/auth/auth.service';
-import { Model } from "mongoose";
-import { Movies, MoviesSchema } from './schema/movies.schema';
-import { MongooseModule } from '@nestjs/mongoose';
-import { AuthController } from 'src/auth/auth.controller';
 import { MoviesModule } from './movies.module';
-import { AppModule } from 'src/app.module';
-import { UserModule } from 'src/user/user.module';
-import { DatabaseModule } from 'src/database/database.module';
+import { getModelToken } from '@nestjs/mongoose';
+import { Movies} from './schema/movies.schema';
+import { mockedMoviesResponse } from './test/movie-mock-response';
+import { JwtModule } from '@nestjs/jwt';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 
 describe('MoviesController', () => {
   let moviesController;
@@ -20,10 +15,12 @@ describe('MoviesController', () => {
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-        imports:[DatabaseModule,AuthModule,MoviesModule,UserModule],
-        controllers: [MoviesController,AuthController],
-        providers: [MoviesService,AuthGuard,AuthService],
-      }).compile();
+        imports:[MoviesModule,JwtModule],
+      })
+      .overrideProvider(getModelToken(Movies.name))
+      //.overrideProvider(getConnectionToken())
+      .useValue(jest.fn())
+      .compile();
 
       moviesService = moduleRef.get<MoviesService>(MoviesService);
       moviesController = moduleRef.get<MoviesController>(MoviesController);
@@ -31,10 +28,28 @@ describe('MoviesController', () => {
 
   describe('getMovies', () => {
     it('should return an array of movies', async () => {
-      const result = ['test'];
-      jest.spyOn(moviesService, 'getMovies').mockImplementation(() => result);
+      jest.spyOn(moviesService, 'getMovies').mockResolvedValue(mockedMoviesResponse);
 
-      expect(await moviesController.getMovies()).toBe(result);
+      expect(await moviesController.getMovies()).toBe(mockedMoviesResponse);
+    });
+  });
+
+  describe('getDetailsOfMovieById', () => {
+    it('should return details of the movie with the given ID', async () => {
+      const mock = new MockAdapter(axios);
+      const id = 4;
+      const expectedResult = {
+        title: 'A New Hope',
+        episode_id: 4,
+        opening_crawl: 'It is a period of civil war...',
+        director: 'George Lucas',
+        producer: 'Gary Kurtz, Rick McCallum',
+        release_date: '1977-05-25'
+      };
+  
+      mock.onGet(`https://swapi.dev/api/films/${id}`).reply(200, expectedResult);
+  
+      expect(await moviesController.getDetails(id)).toEqual(expectedResult);
     });
   });
 });
