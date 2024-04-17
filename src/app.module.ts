@@ -14,6 +14,7 @@ import { MoviesService } from './movies/movies.service';
 import { MoviesController } from './movies/movies.controller';
 import { MoviesModule } from './movies/movies.module';
 import { Movies, MoviesSchema } from './movies/schema/movies.schema';
+import { DatabaseModule } from './database/database.module';
 
 
 @Module({
@@ -21,7 +22,8 @@ import { Movies, MoviesSchema } from './movies/schema/movies.schema';
     UserModule,
     MoviesModule,
     AuthModule,
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/starWarsManagment'),
+    DatabaseModule,
+    //MongooseModule.forRoot('mongodb://127.0.0.1:27017/starWarsManagment'),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]), //Chequear de pasarle todos los schemmas al app.module
     MongooseModule.forFeature([{name: Movies.name, schema: MoviesSchema}]),
     HttpModule
