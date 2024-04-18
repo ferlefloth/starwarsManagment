@@ -11,9 +11,3 @@ export class UserController{
       return this.userService.register(userObject);
   }
 }
-
-/*
-  // Ver bien el package. 
-  //Servicio para test
-  //Ver railway para deployar
-*/

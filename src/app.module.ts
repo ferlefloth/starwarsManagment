@@ -23,8 +23,7 @@ import { DatabaseModule } from './database/database.module';
     MoviesModule,
     AuthModule,
     DatabaseModule,
-    //MongooseModule.forRoot('mongodb://127.0.0.1:27017/starWarsManagment'),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]), //Chequear de pasarle todos los schemmas al app.module
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{name: Movies.name, schema: MoviesSchema}]),
     HttpModule
   ],

@@ -19,7 +19,7 @@ export class MoviesController{
     @Get(":id")
     @Roles(['Usuario Regular'])
     async getDetails(@Param('id')  id: number){
-      return this.moviesService.getDetailsOfMovieById(id); // solo los usuarios con Rol "Usuarios Regulares"
+      return this.moviesService.getDetailsOfMovieById(id);
     }
   
     @Roles(['Administrador'])

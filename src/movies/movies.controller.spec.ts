@@ -11,6 +11,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { MoviesResponseDto } from './dto/movies-response-dto';
 import * as jwt from 'jsonwebtoken';
 import { ForbiddenException, UnauthorizedException } from '@nestjs/common';
+import { MoviesRequestDto } from './dto/movies-request-dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthModule } from 'src/auth/auth.module';
 
 describe('MoviesController', () => {
   let moviesController;
@@ -34,6 +37,7 @@ describe('MoviesController', () => {
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [MoviesModule, JwtModule],
+      //providers:[AuthGuard]
     })
       .overrideProvider(getModelToken(Movies.name))
       // .useValue(jest.fn())// Antes
@@ -114,7 +118,7 @@ describe('MoviesController', () => {
 
       const tokenPayload = {
         userId: '123',
-        roles: ['Administrador'],
+        role: 'Administrador',
       };
 
       const token = jwt.sign(tokenPayload, 'secret_key', { expiresIn: '1h' });
@@ -133,7 +137,7 @@ describe('MoviesController', () => {
 
   it('should forbid creation of a movie for users with "Usuario Regular" role', async () => {
 
-    const movieDto: MoviesResponseDto = {
+    const movieDto: MoviesRequestDto = {
       title: 'Test',
       episode_id: 1,
       opening_crawl: 'test',
@@ -161,24 +165,24 @@ describe('MoviesController', () => {
   describe('UpdateMovie', () => {
 
     it('should update an existing movie if "Administrador" is asigned', async () => {
-      const movieId = '1';
-      const movieDto: MoviesResponseDto = {
-        title: '',
-        episode_id: 1,
-        opening_crawl: '',
-        director: '',
-        producer: '',
-        release_date: undefined,
+      const movieId = 5;
+      const movieDto: MoviesRequestDto = {
+        title: 'Test',
+        episode_id: 5,
+        opening_crawl: 'test',
+        director: 'director test',
+        producer: 'producer test',
+        release_date: new Date,
         characters: [],
         planets: [],
         vehicles: [],
-        created: undefined,
-        edited: undefined
+        created: new Date,
+        edited: new Date
       };
 
       const updatedMovie: Movies = {
         title: 'Test',
-        episode_id: 1,
+        episode_id: 5,
         opening_crawl: 'test',
         director: 'director test',
         producer: 'producer test',
@@ -210,10 +214,10 @@ describe('MoviesController', () => {
 
     it('should forbid updating a movie for users with "Usuario Regular" assigned', async () => {
 
-      const movieId = 2
-      const updatedMovieDto: MoviesResponseDto = {
+      const movieId = 5
+      const updatedMovieDto: MoviesRequestDto = {
         title: 'Updated Test',
-        episode_id: 2,
+        episode_id: 5,
         opening_crawl: 'updated test',
         director: 'updated director test',
         producer: 'updated producer test',
@@ -240,7 +244,7 @@ describe('MoviesController', () => {
   describe('DeleteMovie', () => {
 
     it('should delete an existing movie  if "Administrador" is assigned', async () => {
-      const movieId = 1;
+      const movieId = 5;
 
       const deletedMovie: Movies = {
         title: 'Test',
@@ -265,12 +269,12 @@ describe('MoviesController', () => {
 
       const response = await moviesController.deleteMovie(movieId, { headers: { authorization: `Bearer ${token}` } });
 
-      expect(response).toEqual(deletedMovie);
+      expect(response).toEqual({"statusCode": 204});
     });
 
 
     it('should forbid deleting a movie for users with "Usuario Regular" role assigned', async () => {
-      const movieId = '1';
+      const movieId = 5;
 
       const tokenPayload = {
         userId: '123',

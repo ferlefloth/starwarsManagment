@@ -32,7 +32,9 @@ import { Roles } from './config/roles.decorator';
           throw new UnauthorizedException('El token no incluye el campo role');
         }              
         const roleFromController = this.reflector.get(Roles, context.getHandler());
-
+        console.log('roleFromContoller length: ' + roleFromController.length)
+        console.log('roleFromController[0]h: ' + roleFromController[0])
+        console.log('validacion: ' + (roleFromController.length <= 1 && roleFromController[0] != payload.role))
         if(roleFromController.length <= 1 && roleFromController[0] != payload.role){ //TODO mejorar validaciónes en controllers
           throw  new UnauthorizedException('Debe ser administrador para utilizar esta Api')
         }

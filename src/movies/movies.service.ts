@@ -75,10 +75,10 @@ export class MoviesService{
 
         try{
             const deletedMovie = await this.moviesModel.findByIdAndDelete(findedMovie._id);
-            console.log('deletedMovie: ' + JSON.stringify(deletedMovie))
+            console.log(`deletedMovie: + ${JSON.stringify(deletedMovie)}`)
         }catch(error){
-            console.log('el error: ' + JSON.stringify(error))
+            console.log(`[Delete Movie Error] ' + ${JSON.stringify(error)}`)
         }
-        return { statusCode: 204 } // hacerlo más elegante
+        return { statusCode: 204 } 
      }
 }

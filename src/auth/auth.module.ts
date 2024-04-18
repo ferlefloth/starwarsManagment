@@ -6,7 +6,6 @@ import { User, UserSchema } from "src/user/schema/user.schema";
 import { JwtModule } from "@nestjs/jwt";
 import { jwtConstants } from "./jwt.constants";
 import { AuthGuard } from "./auth.guard";
-import { APP_GUARD } from "@nestjs/core";
 
 @Module({
     imports:[
@@ -16,11 +15,12 @@ import { APP_GUARD } from "@nestjs/core";
                 schema: UserSchema
             }
         ]),
+        JwtModule,
         JwtModule.register({
             global: true,
             secret: jwtConstants.secret,
             signOptions: { expiresIn: '60m' },
-          }),
+          })
     ],
     controllers:[AuthController],
     providers:[AuthService, AuthGuard]
