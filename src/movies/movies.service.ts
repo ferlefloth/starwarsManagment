@@ -33,9 +33,9 @@ export class MoviesService{
      async createMovie(moviesRequest: MoviesRequestDto): Promise<MoviesResponseDto>{ //chequear validaciones
         
         const movieToSave = MoviesResponseDto.fromEntity(moviesRequest)
-        console.log('el moviesToSave: ' + JSON.stringify(movieToSave))
 
         const savedMovied: Movies =  await this.moviesModel.create(movieToSave)
+        console.log('el savedMovie: ' + JSON.stringify(savedMovied))
         return MoviesResponseDto.fromEntity(savedMovied)
      }
  
