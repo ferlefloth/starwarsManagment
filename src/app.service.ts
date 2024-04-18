@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class AppService {
   getHello(): string {
     return `    STARWARS-MANAGMENT-API
+    <pre>
                     .-.__      \ .-.  ___  __
                 |_|  '--.-.-(   \/\;;\_\.-._______.-.
                 (-)___     \ \ .-\ \;;\(   \       \ \
@@ -22,6 +23,7 @@ export class AppService {
                                             \ \  \
                                               \ \  \
                                               \_\_|                    
+    </pre>
     `
   }
 }

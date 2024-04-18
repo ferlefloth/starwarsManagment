@@ -1,6 +1,6 @@
 **----------------API StarWarsManagment ----------------**
 
-.-.__      \ .-.  ___  __
+```.-.__      \ .-.  ___  __
 |_|  '--.-.-(   \/\;;\_\.-._______.-.
 (-)___     \ \ .-\ \;;\(   \       \ \
  Y    '---._\_((Q)) \;;\\ .-\     __(_)
@@ -17,7 +17,7 @@
                            \_:.  \
                              \ \  \
                               \ \  \
-                               \_\_|
+                               \_\_|```
 ## Description
 
 Este servicio cuenta con 3 entidades **Movies**, **User**,**Auth**, cada una de estas entidades posee su module, controller y services. 
@@ -31,6 +31,9 @@ Se podrán registrar con su usuario y mail y podrán realizar el login correspon
 
 Se agregaron únicamente los tests de la entidad movies 
 
+El servicio se encuentra deployado. 
+
+Dentro de este repositorio encontraran la collection con las peticiones correspondientes, llamado: starWarsManagment.postman_collection
 
 
 ## Installation

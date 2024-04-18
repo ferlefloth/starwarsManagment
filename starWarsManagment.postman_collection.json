@@ -1,0 +1,317 @@
+{
+	"info": {
+		"_postman_id": "a8321776-9de0-4939-b5c3-051ac1299812",
+		"name": "starWarsManagmentProd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12569321"
+	},
+	"item": [
+		{
+			"name": "authLogin - PROD",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"R2D2\",\r\n    \"email\": \"test3@gmail.com\",\r\n    \"password\": \"test123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://starwarsmanagment-production.up.railway.app/auth/login",
+					"protocol": "https",
+					"host": [
+						"starwarsmanagment-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authRegister - PROD",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"R2D2\",\r\n    \"name\": \"R2D2\",\r\n    \"email\": \"test3@gmail.com\",\r\n    \"password\": \"test123\",\r\n    \"role\": \"Usuario Regular\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://starwarsmanagment-production.up.railway.app/user/register",
+					"protocol": "https",
+					"host": [
+						"starwarsmanagment-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "movies - PROD",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{CPI_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Film updeteado\", \r\n  \"espisode_id\": 1,\r\n    \"opening_crawl\": \"descripcion nueva\", \r\n    \"director\": \"Un director nuevo\", \r\n    \"producer\": \"Gary Kurtz, Rick McCallum\", \r\n    \"release_date\": \"1999-09-12\", \r\n \r\n    \"planets\": [\r\n        \"planet 1\", \r\n        \"planet 1\", \r\n        \"planet 1\"\r\n    ], \r\n    \"starships\": [\r\n        \"starship 1\", \r\n        \"starship 1\", \r\n        \"starship 1\"\r\n    ], \r\n    \"vehicles\": [\r\n        \"vehicles 1\", \r\n        \"vehicles 1\",\r\n        \"vehicles 1\"\r\n    ], \r\n    \"species\": [\r\n        \"species 1\", \r\n        \"species 1\",\r\n        \"species 1\"\r\n    ], \r\n    \"created\": \"2014-12-10T14:23:31.880000Z\", \r\n    \"edited\": \"2014-12-20T19:49:45.256000Z\", \r\n    \"url\": \"https://swapi.dev/api/films/1/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://starwarsmanagment-production.up.railway.app/movies/1",
+					"protocol": "https",
+					"host": [
+						"starwarsmanagment-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"movies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "movies - PROD",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{CPI_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Un film\", \r\n    \"episode_id\": 1, \r\n    \"opening_crawl\": \"Test del opening crawl\", \r\n    \"director\": \"George Lucas\", \r\n    \"producer\": \"Gary Kurtz, Rick McCallum\", \r\n    \"release_date\": \"1977-05-25\", \r\n    \"characters\": [\r\n        \"character 1\",\r\n        \"character 1\",\r\n        \"character 1\"\r\n    ], \r\n    \"planets\": [\r\n        \"planet 1\", \r\n        \"planet 1\", \r\n        \"planet 1\"\r\n    ], \r\n    \"starships\": [\r\n        \"starship 1\", \r\n        \"starship 1\", \r\n        \"starship 1\"\r\n    ], \r\n    \"vehicles\": [\r\n        \"vehicles 1\", \r\n        \"vehicles 1\",\r\n        \"vehicles 1\"\r\n    ], \r\n    \"species\": [\r\n        \"species 1\", \r\n        \"species 1\",\r\n        \"species 1\"\r\n    ], \r\n    \"created\": \"2014-12-10T14:23:31.880000Z\", \r\n    \"edited\": \"2014-12-20T19:49:45.256000Z\", \r\n    \"url\": \"https://swapi.dev/api/films/1/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://starwarsmanagment-production.up.railway.app/movies",
+					"protocol": "https",
+					"host": [
+						"starwarsmanagment-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "moviesById  - PROD",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{CPI_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://starwarsmanagment-production.up.railway.app/movies/1",
+					"protocol": "https",
+					"host": [
+						"starwarsmanagment-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"movies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "movies - PROD",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{CPI_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://starwarsmanagment-production.up.railway.app/movies",
+					"protocol": "https",
+					"host": [
+						"starwarsmanagment-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "movies PROD",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{CPI_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://starwarsmanagment-production.up.railway.app/movies/1",
+					"protocol": "https",
+					"host": [
+						"starwarsmanagment-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"movies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
