@@ -8,6 +8,7 @@ import { mockedMoviesResponse } from './test/movie-mock-response';
 import { JwtModule } from '@nestjs/jwt';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { MoviesResponseDto } from './dto/movies-response-dto';
 
 describe('MoviesController', () => {
   let moviesController;
@@ -18,7 +19,6 @@ describe('MoviesController', () => {
         imports:[MoviesModule,JwtModule],
       })
       .overrideProvider(getModelToken(Movies.name))
-      //.overrideProvider(getConnectionToken())
       .useValue(jest.fn())
       .compile();
 
@@ -26,15 +26,15 @@ describe('MoviesController', () => {
       moviesController = moduleRef.get<MoviesController>(MoviesController);
   });
 
-  describe('getMovies', () => {
+  describe('getMovies and getDetailsOfMovieById', () => {
+    
     it('should return an array of movies', async () => {
       jest.spyOn(moviesService, 'getMovies').mockResolvedValue(mockedMoviesResponse);
 
       expect(await moviesController.getMovies()).toBe(mockedMoviesResponse);
     });
-  });
+  
 
-  describe('getDetailsOfMovieById', () => {
     it('should return details of the movie with the given ID', async () => {
       const mock = new MockAdapter(axios);
       const id = 4;
@@ -52,4 +52,99 @@ describe('MoviesController', () => {
       expect(await moviesController.getDetails(id)).toEqual(expectedResult);
     });
   });
+
+  describe('CreateMovie, UpdateMovie, DeleteMovie',()=>{
+
+    it('should create a new movie', async () => {
+      const movieDto: MoviesResponseDto = {
+        title: '',
+        episode_id: 0,
+        opening_crawl: '',
+        director: '',
+        producer: '',
+        release_date: undefined,
+        characters: [],
+        planets: [],
+        vehicles: [],
+        created: undefined,
+        edited: undefined
+      };
+
+      const createdMovie: Movies = {
+        title: 'Test',
+        episode_id: 1,
+        opening_crawl: 'test',
+        director: 'director test',
+        producer: 'producer test',
+        release_date: new Date,
+        characters: [],
+        planets: [],
+        vehicles: [],
+        created: new Date,
+        edited: new Date
+      };
+
+      jest.spyOn(moviesService, 'createMovie').mockResolvedValue(createdMovie);
+
+      expect(await moviesController.createMovie(movieDto)).toBe(createdMovie);
+    });
+  });
+
+  it('should update an existing movie', async () => {
+    const movieId = '123';
+    const movieDto: MoviesResponseDto = {
+      title: '',
+      episode_id: 0,
+      opening_crawl: '',
+      director: '',
+      producer: '',
+      release_date: undefined,
+      characters: [],
+      planets: [],
+      vehicles: [],
+      created: undefined,
+      edited: undefined
+    };
+
+    const updatedMovie: Movies = {
+      title: 'Test',
+      episode_id: 1,
+      opening_crawl: 'test',
+      director: 'director test',
+      producer: 'producer test',
+      release_date: new Date,
+      characters: [],
+      planets: [],
+      vehicles: [],
+      created: new Date,
+      edited: new Date
+    };
+
+    jest.spyOn(moviesService, 'updateMovie').mockResolvedValue(updatedMovie);
+
+    expect(await moviesController.updateMovie(movieId, movieDto)).toBe(updatedMovie);
+  });
+
+  it('should delete an existing movie', async () => {
+    const movieId = 1; 
+
+    const deletedMovie: Movies = {
+      title: 'Test',
+      episode_id: 1,
+      opening_crawl: 'test',
+      director: 'director test',
+      producer: 'producer test',
+      release_date: new Date,
+      characters: [],
+      planets: [],
+      vehicles: [],
+      created: new Date,
+      edited: new Date
+    };
+
+    jest.spyOn(moviesService, 'deleteMovie').mockResolvedValue(deletedMovie);
+
+    expect(await moviesController.deleteMovie(movieId)).toBe(deletedMovie);
+  });
+
 });
