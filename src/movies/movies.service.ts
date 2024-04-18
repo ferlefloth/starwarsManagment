@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import axios from "axios";
 import { Model } from "mongoose";
@@ -44,41 +44,35 @@ export class MoviesService{
         moviesRequest: MoviesRequestDto
      ){
          
-        const findedMovieQuery  = this.moviesModel.findOne({episode_id: id})
-
+        const findedMovieQuery  = await this.moviesModel.findOne({episode_id: id})
         if(!findedMovieQuery ){
-            throw Error('movie not found')
+            throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
         }
-
-        const findedMovie = await findedMovieQuery.exec();
-
-        for (const key in moviesRequest) {
+  
+       for (const key in moviesRequest) { 
             if (Object.prototype.hasOwnProperty.call(moviesRequest, key)) {
-              findedMovie[key] = moviesRequest[key];
+                findedMovieQuery[key] = moviesRequest[key];
             }
           }
-    
-    
-        const updatedMovie = await findedMovie.save();
+            
+        const updatedMovie = await findedMovieQuery.save();
 
         return MoviesResponseDto.fromEntity(updatedMovie);
      }
  
      async deleteMovie(id: number){ 
-        const findedMovieQuery  = this.moviesModel.findOne({episode_id: id})
+        const findedMovieQuery  = await this.moviesModel.findOne({episode_id: id})
 
-        if(!findedMovieQuery ){
-            throw Error('movie not found')
+        if(!findedMovieQuery){
+            throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
         }
         
-        const findedMovie = await findedMovieQuery.exec();
-
         try{
-            const deletedMovie = await this.moviesModel.findByIdAndDelete(findedMovie._id);
-            console.log(`deletedMovie: + ${JSON.stringify(deletedMovie)}`)
+            const deletedMovie = await this.moviesModel.findByIdAndDelete(findedMovieQuery._id);
+            return  {message: 'Movie deleted successfully', deletedMovie };
         }catch(error){
             console.log(`[Delete Movie Error] ' + ${JSON.stringify(error)}`)
+            return HttpStatus.INTERNAL_SERVER_ERROR
         }
-        return { statusCode: 204 } 
      }
 }
