@@ -5,7 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.MONGOURI), //starsWarsManagment 
+    MongooseModule.forRoot(process.env.MONGOURI),
+   // MongooseModule.forRoot(process.env.MONGODEV), //starsWarsManagment 
 ],
 })
 export class DatabaseModule {}
