@@ -1,5 +1,5 @@
 import { env } from "process";
 
 export const jwtConstants ={
-    secret: process.env.JWTCONSTANT
+    secret:"elSecret"// process.env.JWTCONSTANT
 }
