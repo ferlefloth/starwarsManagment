@@ -18,11 +18,28 @@ export class UserRegisterDto{
     password: string;
 
     @IsString()
-    role: string; //hacer único
+    role: string ; 
   
-
+    setName(name: string): UserRegisterDto{
+      this.name = name;
+      return this;
+    }
+    
+    setUserName(userName: string): UserRegisterDto{
+      this.userName = userName;
+      return this;
+    }
+    
+    setPassword(password: string): UserRegisterDto{
+      this.password = password
+      return this;
+    }    
     setEmail(email: string): UserRegisterDto {
       this.email = email;
+      return this;
+    }
+    setRole(role: string): UserRegisterDto {
+      this.role = role;
       return this;
     }
     static copy(dto: UserRegisterDto): UserRegisterDto {

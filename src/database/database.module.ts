@@ -7,7 +7,7 @@ import 'dotenv/config'
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGOURI),
-  //  MongooseModule.forRoot(process.env.MONGODEV), //starsWarsManagment 
+   // MongooseModule.forRoot(process.env.MONGODEV), //starsWarsManagment 
 ],
 })
 export class DatabaseModule {}

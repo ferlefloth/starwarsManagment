@@ -10,13 +10,13 @@ export class AuthController{
     constructor(private readonly authService: AuthService) {}
 
     //register // DENTRO DE USUARIO
-    @Post('register')
-    registerUser(@Body() userObject: RegisterAuthDto){
+    // @Post('register')
+    // registerUser(@Body() userObject: RegisterAuthDto){
         
-        console.log({body: userObject})
+    //     console.log({body: userObject})
 
-        return this.authService.register(userObject);
-    }
+    //     return this.authService.register(userObject);
+    // }
 
     @Post('login')
     loginUser(@Body() userObjectLogin: LoginAuthDto){

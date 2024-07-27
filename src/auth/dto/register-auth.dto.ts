@@ -5,5 +5,8 @@ import { PartialType } from "@nestjs/swagger";
 export class RegisterAuthDto extends PartialType(LoginAuthDto){
     @IsNotEmpty()
     name: string
+
+    @IsNotEmpty()
+    role: string = "Usuario Regular";
 }
 

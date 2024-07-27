@@ -1,9 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable  } from "@nestjs/common";
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import {User, UserDocument} from './schema/user.schema';
 import { RegisterAuthDto } from "src/auth/dto/register-auth.dto";
 import {hash} from 'bcrypt'
+import { UserRegisterDto } from "./dto/user-register-request.dto";
 
 @Injectable()
 export class UserService{
@@ -14,6 +15,14 @@ export class UserService{
         const plainToHash = await hash(password,10);
 
         userObject = {...userObject, password:plainToHash}
-        return this.userModel.create(userObject);
+   
+        const user : User = new UserRegisterDto()
+                            .setEmail(userObject.email)
+                            .setName(userObject.name)
+                            .setPassword(userObject.password)
+                            .setRole(userObject.role)
+        
+
+        return this.userModel.create(user);
     }    
 }

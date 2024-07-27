@@ -2,23 +2,22 @@ import { HttpException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { User, UserDocument } from "src/user/schema/user.schema";
-import { RegisterAuthDto } from "./dto/register-auth.dto";
-import {hash, compare} from 'bcrypt'
+import { compare} from 'bcrypt'
 import { LoginAuthDto } from "./dto/login-auth.dto";
 import { JwtService } from "@nestjs/jwt";
-import { find } from "rxjs";
+
 @Injectable()
 export class AuthService{
     constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>, private jwtAuthService: JwtService){}
 
-    async register(userObject:RegisterAuthDto){
-        const { password } = userObject;
-        const plainToHash = await hash(password,10);
+    // async register(userObject:RegisterAuthDto){
+    //     const { password } = userObject;
+    //     const plainToHash = await hash(password,10);
 
-        userObject = {...userObject, password:plainToHash}
+    //     userObject = {...userObject, password:plainToHash}
  
-        return this.userModel.create(userObject);
-    }
+    //     return this.userModel.create(userObject);
+    // }
 
     async login(userObjectLogin : LoginAuthDto){
         const { email, password } = userObjectLogin 
