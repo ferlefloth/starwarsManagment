@@ -1,5 +1,4 @@
-import { env } from "process";
-
+import 'dotenv/config'
 export const jwtConstants ={
-    secret:"elSecret"// process.env.JWTCONSTANT
+    secret: process.env.JWTCONSTANT
 }
